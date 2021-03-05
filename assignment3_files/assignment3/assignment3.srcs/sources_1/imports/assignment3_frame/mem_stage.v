@@ -60,8 +60,13 @@ module MEM_STAGE(
 
    // **TODO: Complete the rest of the pipeline 
    assign memaddr_MEM = aluout_MEM;
-   assign regval_MEM = rd_val_MEM;
+   assign regval_MEM = rd_mem_MEM ? rd_val_MEM : aluout_MEM;
    assign MEM_latch_out = MEM_latch; 
+
+   assign from_MEM_to_DE = {
+                                wr_reg_MEM,
+                                wregno_MEM
+                                };
 
    assign {
                                 inst_MEM,

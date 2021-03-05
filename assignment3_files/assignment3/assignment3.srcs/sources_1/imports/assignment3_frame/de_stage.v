@@ -42,12 +42,21 @@ module DE_STAGE(
   wire wr_reg_DE;
   wire [`REGNOBITS-1:0] wregno_DE;
   
+  wire[`DE_latch_WIDTH-1:0] DE_latch_contents; 
+  wire[`BUS_CANARY_WIDTH-1:0] bus_canary_DE;
+  
+  wire stall_FE;
+  wire stall_DE;
+  wire br_cond_AGEX;
+  
+  wire wr_reg_AGEX;
+  wire [`REGNOBITS-1:0] wregno_AGEX;
+  wire wr_reg_MEM;
+  wire [`REGNOBITS-1:0] wregno_MEM;  
   wire wr_reg_WB;
   wire [`REGNOBITS-1:0] wregno_WB;
   wire [`DBITS-1:0] regval_WB;
   
-  wire[`DE_latch_WIDTH-1:0] DE_latch_contents; 
-  wire[`BUS_CANARY_WIDTH-1:0] bus_canary_DE; 
  // **TODO: Complete the rest of the pipeline 
 
 // extracting a part of opcode 
@@ -65,10 +74,11 @@ module DE_STAGE(
   assign rd_mem_DE = op1_DE == `OP1_LW;
   assign wr_mem_DE = op1_DE == `OP1_SW;
   assign wr_reg_DE = (op1_DE == `OP1_ALUR) || rd_mem_DE || (op1_DE[`OP1BITS-1] == 1);
+  assign wregno_DE = (op1_DE == `OP1_ALUR) ? rd_DE : rt_DE;
   
 // set regval1_DE and regval2_DE to rs and rt
-  assign regval1_DE = regs[rs_DE];
-  assign regval2_DE = regs[rt_DE];
+  assign regval1_DE = wr_reg_WB && wregno_WB == rs_DE ? regval_WB : regs[rs_DE];
+  assign regval2_DE = wr_reg_WB && wregno_WB == rt_DE ? regval_WB : regs[rt_DE];
   
 //  reg [`REGNOBITS-1:0] wregno_DE_REG;
 //  reg [`REGNOBITS-1:0] wregno_EX_REG;
@@ -89,14 +99,27 @@ module DE_STAGE(
 //  assign stall_pipe = (DE_stall || EX_stall || MEM_stall) && (
 //  ((rs_eval || rt_eval) && (op1_DE[5:3] == 3'b000 || op1_DE[5:2] == 4'b0010)) ||
 //  (rs_eval && (op1_DE[5:2] == 4'b0011 || op1_DE[5:3] == 3'b010 || op1_DE[5:3] == 3'b100)));
-  
-  assign stall_pipe = (from_AGEX_to_DE) || is_br_DE;
+  assign {
+            br_cond_AGEX,
+            wr_reg_AGEX,
+            wregno_AGEX
+            } = from_AGEX_to_DE;
+  assign {
+            wr_reg_MEM,
+            wregno_MEM
+            } = from_MEM_to_DE;
+  assign {
+            wr_reg_WB,
+            wregno_WB,
+            regval_WB
+            } = from_WB_to_DE;
+            
+  assign stall_DE = (wr_reg_AGEX && (wregno_AGEX == rs_DE || wregno_AGEX == rt_DE)) ||
+                    (wr_reg_MEM && (wregno_MEM == rs_DE || wregno_MEM == rt_DE));
+  assign stall_FE = br_cond_AGEX || is_br_DE || stall_DE;
   assign from_DE_to_FE = {
-    stall_pipe
+    stall_FE
   };
-  
-  
-  assign wregno_DE = (op1_DE[5:3] == 3'b000) ? rd_DE : rt_DE;
 
     // Sign extension example 
   SXT mysxt (.IN(imm_DE), .OUT(sxt_imm_DE));
@@ -110,13 +133,6 @@ module DE_STAGE(
             pcplus_DE,
             bus_canary_DE 
             }  = from_FE_latch;  // based on the contents of the latch, you can decode the content 
-
-// decoding contents of signals from WB
-    assign {
-            wr_reg_WB,
-            wregno_WB,
-            regval_WB
-            } = from_WB_to_DE;
 
     assign DE_latch_contents = {
                                   inst_DE,
@@ -165,13 +181,12 @@ module DE_STAGE(
   end
 
   always @ (posedge clk or posedge reset) begin
-    if(reset || from_AGEX_to_DE) begin
+    if(reset || stall_DE) begin
       DE_latch <= {`DE_latch_WIDTH{1'b0}};
       // might need more code 
       end
-     else
-     // need to complete. e.g.) stall? 
-      DE_latch <= DE_latch_contents;
+     else 
+        DE_latch <= DE_latch_contents;
   end
 
 endmodule

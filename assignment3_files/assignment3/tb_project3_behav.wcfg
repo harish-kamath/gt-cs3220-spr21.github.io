@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="960660fs"></ZoomStartTime>
-      <ZoomEndTime time="1123661fs"></ZoomEndTime>
+      <ZoomStartTime time="971100fs"></ZoomStartTime>
+      <ZoomEndTime time="1136501fs"></ZoomEndTime>
       <Cursor1Time time="2000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="129"></NameColumnWidth>
-      <ValueColumnWidth column_width="84"></ValueColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="26" />
    <wvobject fp_name="/tb_project3/CLOCK_50" type="logic">
       <obj_property name="ElementShortName">CLOCK_50</obj_property>
       <obj_property name="ObjectShortName">CLOCK_50</obj_property>
@@ -92,9 +92,33 @@
       <obj_property name="ElementShortName">memaddr_MEM[31:0]</obj_property>
       <obj_property name="ObjectShortName">memaddr_MEM[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_FE_stage/PC_FE_latch" type="array">
+      <obj_property name="ElementShortName">PC_FE_latch[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_FE_latch[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_FE_stage/br_cond_FE" type="logic">
+      <obj_property name="ElementShortName">br_cond_FE</obj_property>
+      <obj_property name="ObjectShortName">br_cond_FE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_FE_stage/pctarget_FE" type="array">
+      <obj_property name="ElementShortName">pctarget_FE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pctarget_FE[31:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/tb_project3/myprj/my_DE_stage/PC_DE" type="array">
       <obj_property name="ElementShortName">PC_DE[31:0]</obj_property>
       <obj_property name="ObjectShortName">PC_DE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_AGEX_stage/PC_AGEX" type="array">
+      <obj_property name="ElementShortName">PC_AGEX[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_AGEX[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_MEM_stage/PC_MEM" type="array">
+      <obj_property name="ElementShortName">PC_MEM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_MEM[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_project3/myprj/my_WB_stage/PC_WB" type="array">
+      <obj_property name="ElementShortName">PC_WB[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_WB[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_project3/myprj/my_DE_stage/regs" type="array">
       <obj_property name="ElementShortName">regs[15:0][31:0]</obj_property>

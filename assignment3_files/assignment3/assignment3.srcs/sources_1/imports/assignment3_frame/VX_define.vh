@@ -19,7 +19,7 @@
 
   // [NOTICE] please note that both imem and dmem use the SAME "IDMEMINITFILE".
   // you need to change this line to change which test file to read 
-  `define IDMEMINITFILE  "test1.mem"
+  `define IDMEMINITFILE  "test2.mem"
  
 
  
@@ -86,8 +86,8 @@
   `define from_MEM_to_FE_WIDTH 4
   `define from_WB_to_FE_WIDTH 4
 
-  `define from_AGEX_to_DE_WIDTH 1 // if br_cond, flush pipeline
-  `define from_MEM_to_DE_WIDTH 4 
+  `define from_AGEX_to_DE_WIDTH (1 + 1 + `REGNOBITS) // br_cond + reg write stall
+  `define from_MEM_to_DE_WIDTH (1 + `REGNOBITS)
   `define from_WB_to_DE_WIDTH  (1 + `REGNOBITS + `DBITS)
 
   `define from_MEM_to_AGEX_WIDTH  4 

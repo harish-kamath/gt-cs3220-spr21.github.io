@@ -100,7 +100,11 @@ assign from_AGEX_to_FE = {
                                 pctarget_AGEX
                                 };
                                 
-assign from_AGEX_to_DE = br_cond_AGEX;
+assign from_AGEX_to_DE = {
+                                br_cond_AGEX,
+                                wr_reg_AGEX,
+                                wregno_AGEX
+                                };
 
     assign  {
                                   inst_AGEX,
