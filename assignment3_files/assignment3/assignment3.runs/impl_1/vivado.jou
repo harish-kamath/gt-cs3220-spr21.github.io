@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Fri Mar  5 22:06:57 2021
+# Process ID: 4957
+# Current directory: /home/hkamath3/gt-cs3220-spr21.github.io/assignment3_files/assignment3/assignment3.runs/impl_1
+# Command line: vivado -log project3_frame.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source project3_frame.tcl -notrace
+# Log file: /home/hkamath3/gt-cs3220-spr21.github.io/assignment3_files/assignment3/assignment3.runs/impl_1/project3_frame.vdi
+# Journal file: /home/hkamath3/gt-cs3220-spr21.github.io/assignment3_files/assignment3/assignment3.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source project3_frame.tcl -notrace
